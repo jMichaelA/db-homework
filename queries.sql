@@ -1,4 +1,4 @@
--- Brian Falor
+-- Brian Falor a00908905
 -- Jacob Adams a01471888
 
 -- Query 1: LA Dodgers
@@ -222,6 +222,22 @@ SELECT  rk."nameFirst", rk."nameLast", rk."yearID", rk."HR", rk."rank"
 --or more players on the same team hit 10 or more triples each. 
 
 
+WITH trip AS (
+SELECT t."yearID", t."teamID", b."3B", m."masterID", t."name", m."nameFirst", m."nameLast"
+FROM master m
+        JOIN batting b ON b."masterID" = m."masterID"
+        JOIN teams t ON t."teamID" = b."teamID" AND t."yearID" = b."yearID"
+WHERE b."3B" >= 10 )
+
+
+SELECT DISTINCT tr1."yearID" "Year", tr1."name" "Team Name", m."nameFirst" "First Name", m."nameLast" "Last Name", tr1."3B" "Triples", tr2."nameFirst" "Teammate First Name", tr2."nameLast" "Teammate Last Name", tr2."3B" "Teammate Triples"
+FROM master m
+        JOIN trip tr1 ON tr1."masterID" = m."masterID" 
+        JOIN trip tr2 ON tr2."teamID" = tr1."teamID" 
+        
+WHERE tr1."masterID" < tr2."masterID" AND tr1."yearID" = tr2."yearID"
+ORDER BY tr1."yearID", tr1."name"
+;
 
 
 --Query 12: Ranking the teams - Rank each team in terms of 
