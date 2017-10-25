@@ -1,3 +1,6 @@
+-- Brian Falor
+-- Jacob Adams a01471888
+
 -- Query 1: LA Dodgers
 --List the first name and last name of every player 
 --that has played at any time in their career for the
@@ -10,7 +13,7 @@ FROM master m
         JOIN teams t ON t."teamID" = a."teamID" 
 WHERE t."name" = 'Los Angeles Dodgers'
 ORDER BY LOWER("nameLast"), "nameFirst" ASC
-
+;
 
 
 --Query 2: LA Dodgers Only
@@ -59,7 +62,7 @@ FROM master m
         JOIN teams t ON t."teamID" = p."teamID" 
 WHERE p."teamID" = 'MON'
 ORDER BY "nameLast", "nameFirst" ASC 
-
+;
 
 
 --Query 4: Error Kings - List the name of the team, year,
@@ -96,7 +99,7 @@ SELECT DISTINCT a."aver" "Average", "H" "Hits", "AB" "At Bats","nameFirst" "Firs
         JOIN "Average" ON a."yearID" =  b."yearID"
 WHERE s."schoolName" = 'Utah State University' AND "AB" >= 0 
 ORDER BY b."yearID","nameLast", a."aver", "H", "AB","nameFirst"
-
+;
 
 
 --Query 6: Yankee Run Kings - List the name, year, and 
@@ -239,7 +242,7 @@ FROM (
         ) wl
     ) perc
 ORDER BY percentage desc
-
+;
 
 
 --Query 13: Pitchers for Mangaer Casey Stengel - List the 
@@ -262,7 +265,6 @@ SELECT DISTINCT t.name, c."yearID", m."nameFirst", m."nameLast", c."nameFirst", 
    JOIN teams t ON c."teamID" = t."teamID" AND c."yearID" = t."yearID"
    JOIN master m ON p."masterID" = m."masterID"
 ORDER BY c."yearID", t.name, m."nameLast", m."nameFirst" 
-    
 ;
 
 
@@ -306,7 +308,8 @@ SELECT DISTINCT m."nameFirst", m."nameLast"
     JOIN degree_sep ds ON t."teamID" = ds."teamID" AND t."yearID" = ds."yearID" AND m."masterID" != ds."masterID"
     LEFT JOIN yogi y ON t."teamID" = y."teamID" AND t."yearID" = y."yearID" AND m."masterID" = y."masterID"
 WHERE y.* IS NULL
-ORDER BY m."nameLast", m."nameFirst";
+ORDER BY m."nameLast", m."nameFirst"
+;
 
 
 
@@ -335,5 +338,6 @@ SELECT DISTINCT t.name, rk.rank -1 as rank
     ) cnt ON rk.rank = cnt.half
     JOIN teams t ON rk."teamID" = t."teamID"
 WHERE t."yearID" >= 1970
-AND t."yearID" <= 1979;
+AND t."yearID" <= 1979
+;
 
